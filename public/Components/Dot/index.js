@@ -6,7 +6,7 @@ export default class Dot {
 
     this.animationFrameId = null;
     this.isDestroyed = false;
-    this.speed = init?.speed || 1;
+    this.speed = init?.speed || 1; //(Varies from 1x to 10x)
     this.points = 0;
     this.onDelete = init?.onDelete;
     this.animationStartTime = null;
@@ -19,9 +19,9 @@ export default class Dot {
     /**
      * Get Size Of Parent
      */
-    
-    this.bottom = init.parentHeight; //600 + parseInt(this.size.height);
+    this.width = init.parentSize.width;
     this.top = -(parseInt(this.size.height)-(parseInt(this.size.height)/2));
+    this.bottom = init.parentSize.height + parseInt(this.size.height) + this.top; //Remove The Extra Top from The Height (-)
 
 
     /**
@@ -32,8 +32,10 @@ export default class Dot {
     /**
      * Bind The Click Event
      */
-    this.$el.addEventListener("mousedown", this.handleClick.bind(this)); //ISSUE: TWO EVENTS gET trigger in mobile
+    this.$el.addEventListener("mousedown", this.handleClick.bind(this));
     this.$el.addEventListener("touchstart", this.handleClick.bind(this));
+
+    this.pointsMap = this.createPointsMap();
   }
 
   setSpeed(speed) {
@@ -62,14 +64,11 @@ export default class Dot {
     this.$el.style.borderRadius = this.size.radius;
     this.$el.style.top = this.getPixelValue(this.top);
 
-    this.$el.style.left = this.getPixelValue(Math.random() * 500);
+    this.$el.style.left = this.getPixelValue(this.getRandomNumber(parseInt(this.size.width), this.width-parseInt(this.size.width))); //Re-consider
 
     this.$el.classList.add("dot");
   }
 
-  /* 
-   * Move this to util AND CACHE THE COLOR
-   */
   getColor() {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -83,6 +82,20 @@ export default class Dot {
 
   getPixelValue(val) {
     return `${val}px`;
+  }
+
+  createPointsMap() {
+    const map = new Map();
+    let count = 1;
+    let points = 10;
+
+    while (count <= 10) {
+      map.set(points*10, points);
+      count++;
+      points--;
+    }
+
+    return map;
   }
 
   appendDotTo(parent) {
@@ -112,8 +125,7 @@ export default class Dot {
   }
 
   handleClick() {
-    this.points = Math.floor(100/parseInt(this.size.width));
-    
+    this.points=this.pointsMap.get(parseInt(this.size.width));
     this.$el.innerHTML=`+${this.points}`;
     
    this.animatePoints();
@@ -149,13 +161,13 @@ export default class Dot {
 
     const CONSTNT_SPEED = 0.01; //10px/1000ms
     const elapseTime = timestamp - this.animationStartTime;
-    const moveBy = CONSTNT_SPEED * elapseTime * this.speed;
+    const moveBy = CONSTNT_SPEED * elapseTime * this.speed; //Overall Speed Will be 10px/Sec*Speed
 
     this.top = this.top + moveBy;
     this.$el.style.top = this.getPixelValue(this.top); //Check For Performance as offset will cause reflow
     this.animationStartTime = timestamp;
 
-    if (this.top > this.bottom) {
+    if (this.top >= this.bottom) {
       this.destroyDot();
     } else {
       this.animationFrameId = requestAnimationFrame(

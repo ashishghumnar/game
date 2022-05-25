@@ -1,17 +1,21 @@
 .game {
   border: 10px solid white;
-  width: 100vw;
-  height: 100vh;
   background-color: black;
   border-radius: 25px;
-  max-width: 800px;
-  max-height: 800px;
   border: 5px dotted rgb(15, 165, 211);
   color: whitesmoke;
+  width: 100vw;
+  height: 100vh;
+  max-width: 800px;
+  max-height: 800px;
 }
 
 .canvas {
   position: relative;
+  display: block;
+  height: calc(100vh - 160px);
+  max-height: 700px;
+  overflow: hidden;
 }
 
 .dot {
@@ -29,11 +33,11 @@
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-between;
-  border-radius: 10px;
-  padding: 10px;
   position: relative;
   background-color: rgba(111, 52, 122, 0.692);
-  z-index: 111;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 999;
 }
 
 @media only screen and (min-width: 480px) {
