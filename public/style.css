@@ -1,0 +1,65 @@
+.game {
+  border: 10px solid white;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  border-radius: 25px;
+  max-width: 800px;
+  max-height: 800px;
+  border: 5px dotted rgb(15, 165, 211);
+  color: whitesmoke;
+}
+
+.canvas {
+  position: relative;
+}
+
+.dot {
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  background-color: rgba(111, 52, 122, 0.692);
+  z-index: 111;
+}
+
+@media only screen and (min-width: 480px) {
+  .controls {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+#timer {
+  color: white;
+}
+
+.speedSlider {
+  padding: 10px;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.speedSlider label {
+  margin-bottom: 10px;
+}
+
+.score {
+  font-size: 35px;
+  border: 1px solid rgb(63, 214, 25);
+  padding: 5px 15px;
+}

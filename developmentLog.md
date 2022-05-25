@@ -1,0 +1,1 @@
+# Using ES6 Module System to load the the JS files as give, added "type=module" attr to index html
