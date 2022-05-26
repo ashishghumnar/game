@@ -4,8 +4,6 @@
   border-radius: 25px;
   border: 5px dotted rgb(15, 165, 211);
   color: whitesmoke;
-  width: 100vw;
-  height: 100vh;
   max-width: 800px;
   max-height: 800px;
 }
@@ -13,7 +11,7 @@
 .canvas {
   position: relative;
   display: block;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 210px);
   max-height: 700px;
   overflow: hidden;
 }

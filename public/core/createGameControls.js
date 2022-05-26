@@ -1,5 +1,5 @@
 
- import { Slider, Score } from "./../Components/index.js";
+ import { Slider, Score } from "../components/index.js";
 
  import appData from "./../store/data/index.js";
 
@@ -35,11 +35,8 @@
      subscribe('score', (value) => {
       $scoreEl.updateScore(value);
     });
-
-    const timer = document.createElement('div');
-    timer.setAttribute('id', "timer");
   
-    controls.append($slider.createElement(), timer , $scoreEl.createElement());
+    controls.append($slider.createElement() , $scoreEl.createElement());
   }
 
   export default createGameControls;

@@ -1,4 +1,4 @@
-import { Dot } from "../Components/index.js";
+import { Dot } from "../components/index.js";
 import appData from "../store/data/index.js";
 
 function createSingleDot(parentSize) {
@@ -14,6 +14,7 @@ function createSingleDot(parentSize) {
     updateScore(earnPoints);
     removeDot(dotId);
     
+    //Create New Dot After 1Sec of of deleting current one
     deleteDotTimer = setTimeout(() => {
       createSingleDot(parentSize);
     }, 1000);
