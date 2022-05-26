@@ -47,8 +47,9 @@ export default class Dot {
      * Bind The Click Event
      * mousedown, touchstart: to capture event as soon as possible
      */
-    this.$el.addEventListener("mousedown", this.handleClick.bind(this));
-    this.$el.addEventListener("touchstart", this.handleClick.bind(this));
+    this.handler = this.handleClick.bind(this);
+    this.$el.addEventListener("mousedown", this.handler, false);
+    this.$el.addEventListener("touchstart", this.handler, false);
   }
 
   setSpeed(speed) {
@@ -108,8 +109,11 @@ export default class Dot {
     );
   }
 
-  handleClick() {
-    setTimeout(this.destroyDot.bind(this), 1000); // Keeping Delay for animation to destroy
+  handleClick(event) {
+    event.preventDefault();
+
+    this.$el.removeEventListener("mousedown", this.handler);
+    this.$el.removeEventListener("touchstart", this.handler);
 
     this.points = getScore(getAbsValue(this.size.width));
     this.$el.innerHTML = `+${this.points}`;
@@ -118,18 +122,19 @@ export default class Dot {
     if (this.onDelete && this.points) {
       this.onDelete(this.id, this.points);
     }
+    this.destroyDot();
   }
 
   /**
    * Destroy The Dot and other clean Up avoid memory leak
    */
   destroyDot() {
-    this.$el.removeEventListener("mousedown", this.handleClick);
-    this.$el.removeEventListener("touchstart", this.handleClick);
-
     cancelAnimationFrame(this.animationFrameId);
 
-    this.$el.remove();
+    setTimeout(() => {
+      this.$el.remove();
+    }, 1000); // Keeping Delay for animation to destroy
+
     this.animationStartTime = null;
   }
 

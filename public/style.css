@@ -2,7 +2,7 @@
   border: 10px solid white;
   background-color: black;
   border-radius: 25px;
-  border: 5px dotted rgb(15, 165, 211);
+  border: 5px dotted #0FA5D3;
   color: whitesmoke;
   max-width: 800px;
   max-height: 800px;
@@ -18,13 +18,12 @@
 
 .dot {
   position: absolute;
-  cursor: pointer;
-  text-align: center;
   font-weight: bolder;
   font-size: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .controls {
@@ -32,28 +31,17 @@
   flex-direction: column-reverse;
   justify-content: space-between;
   position: relative;
-  background-color: rgba(111, 52, 122, 0.692);
+  background-color: #6F347A;
   border-radius: 10px;
   padding: 10px;
   z-index: 999;
 }
 
-@media only screen and (min-width: 480px) {
-  .controls {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
-#timer {
-  color: white;
-}
-
 .speedSlider {
-  padding: 10px;
-  font-size: 25px;
   display: flex;
   flex-direction: column;
+  padding: 10px;
+  font-size: 25px;
 }
 
 .speedSlider label {
@@ -61,7 +49,21 @@
 }
 
 .score {
-  font-size: 35px;
   border: 1px solid rgb(63, 214, 25);
   padding: 5px 15px;
+  font-size: 35px;
+}
+
+.score span {
+  font-weight: bolder;
+}
+
+/*
+* Specific CSS For PC/Tablet
+*/
+@media only screen and (min-width: 480px) {
+  .controls {
+    flex-direction: row;
+    align-items: center;
+  }
 }
