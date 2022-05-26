@@ -2,14 +2,13 @@ import {
   getRandomNumber,
   getRandomColor,
   getScore,
-  getAbsValue,
   getPixelValue,
 } from "./../../utils/index.js";
 
 export default class Dot {
   constructor(init) {
     this.$el = document.createElement("div");
-    
+
     this.$id = Date.now(); //assign some unique id
 
     this.speed = init?.speed || 1; //(Varies from 1x to 10x)
@@ -28,14 +27,10 @@ export default class Dot {
     this.width = init.parentSize.width;
 
     // Top of dot, insteaf getting it from DOM (offsetTop), we will maintain it as property
-    this.top = -(
-      getAbsValue(this.size.height) -
-      getAbsValue(this.size.height) / 2
-    );
+    this.top = -(this.size.height - this.size.height / 2);
 
     // Calculate Lowest bottom point to destroy element
-    this.bottom =
-      init.parentSize.height + getAbsValue(this.size.height) + this.top; //Remove The Extra Top from The Height (-)
+    this.bottom = init.parentSize.height + this.size.height + this.top; //Remove The Extra Top from The Height (-)
 
     /**
      * Initialise Dot With Some Style,
@@ -58,29 +53,25 @@ export default class Dot {
 
   setSize() {
     const randomSize = Math.round(getRandomNumber(10, 100) / 10) * 10; //trying to keep to 10 different sizes
-    const randomNumber = getPixelValue(randomSize);
 
     this.size = {
-      width: randomNumber,
-      height: randomNumber,
-      radius: randomNumber,
+      width: randomSize,
+      height: randomSize,
+      radius: randomSize,
     };
   }
 
   setStyleToDot() {
     this.$el.classList.add("dot");
 
-    this.$el.style.width = this.size.width;
-    this.$el.style.height = this.size.height;
+    this.$el.style.width = getPixelValue(this.size.width);
+    this.$el.style.height = getPixelValue(this.size.height);
+    this.$el.style.borderRadius = getPixelValue(this.size.radius);
     this.$el.style.backgroundColor = getRandomColor();
-    this.$el.style.borderRadius = this.size.radius;
     this.$el.style.top = getPixelValue(this.top);
 
     this.$el.style.left = getPixelValue(
-      getRandomNumber(
-        getAbsValue(this.size.width),
-        this.width - getAbsValue(this.size.width)
-      )
+      getRandomNumber(this.size.width, this.width - this.size.width)
     );
   }
 
@@ -115,7 +106,7 @@ export default class Dot {
     this.$el.removeEventListener("mousedown", this.handler);
     this.$el.removeEventListener("touchstart", this.handler);
 
-    this.points = getScore(getAbsValue(this.size.width));
+    this.points = getScore(this.size.width);
     this.$el.innerHTML = `+${this.points}`;
     this.animatePoints();
 
